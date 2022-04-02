@@ -48,10 +48,11 @@ var OtpStrategy = new Strategy(async function verify(mobile, otp, cb) {
 
         const savedUser = await newUser.save();
         if (savedUser !== null) {
-            const jwt = sign(foundUser, "SuperSecretKey", { algorithm: "HS256", expiresIn: "4d" });
+            const jwt = sign(savedUser.lean(), "SuperSecretKey", { algorithm: "HS256", expiresIn: "4d" });
             return cb(null, { user: savedUser.lean(), token: jwt });
         }
     } catch (error: any) {
+        logger.error(error);
         cb(error, null);
     }
 });
