@@ -52,7 +52,7 @@ var OtpStrategy = new Strategy(async function verify(mobile, otp, cb) {
             return cb(null, { user: savedUser.lean(), token: jwt });
         }
     } catch (error: any) {
-        logger.error(error);
+        logger.error(error.stack);
         cb(error, null);
     }
 });
