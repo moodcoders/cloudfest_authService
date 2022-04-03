@@ -46,7 +46,7 @@ class OtpUtils extends SMSClient {
             // if otp is already in database, donot generate a new one
             // instead notify user to wait till the otp invalidates
             if (otpData != undefined) {
-                const timeout = Math.floor(5 - (new Date().getTime() - otpData.createdAt.getTime()) / (1000 * 60));
+                const timeout = Math.floor(4 - (new Date().getTime() - otpData.createdAt.getTime()) / (1000 * 60));
                 return {
                     message: `OTP already generated. Please wait ${timeout} minutes`,
                     otp: otpData.OTPValue,
