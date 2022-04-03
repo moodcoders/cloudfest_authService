@@ -8,7 +8,7 @@ const OTPRouter: Router = Router();
 
 OTPRouter.post('/generate-otp', generateOTPController);
 
-OTPRouter.get('/login', passport.authenticate('otp', { session: false, failWithError: true }),
+OTPRouter.post('/login', passport.authenticate('otp', { session: false, failWithError: true }),
     async (req: Request, res: Response, next: NextFunction) => {
         return res.json({ user: req.user })
     },

@@ -1,6 +1,6 @@
 import express, { Express } from 'express';
 import passport from 'passport';
-
+import morgan from 'morgan';
 import googleRoutes from './routes/google-routes';
 import exampleRoutes from './routes/example-routes';
 import OTPRoutes from './routes/otp-routes';
@@ -26,6 +26,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use(express.json());
+app.use(morgan('dev'));
 
 app.use('/auth/google', googleRoutes);
 app.use('/auth/otp/', OTPRoutes);
