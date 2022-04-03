@@ -5,7 +5,6 @@ const providerSchema: Schema = new Schema({
         type: String,
         enum: [
             "GOOGLE",
-            "FACEBOOK",
             "MOBILE"
         ]
     },
@@ -18,7 +17,8 @@ const providerSchema: Schema = new Schema({
 providerSchema.index({ name: 1, uid: 1 }, { unique: true })
 
 const addressSchema: Schema = new Schema({
-    address: Object,
+    street: String,
+    houseNo: String,
     pincode: {
         type: String,
         required: true

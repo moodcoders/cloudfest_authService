@@ -8,7 +8,7 @@ import OTPRoutes from './routes/otp-routes';
 import googleStrategy from './strategies/google';
 import OtpStrategy from './strategies/otp';
 import swaggerUi from 'swagger-ui-express';
-import swaggerDocument from './docs/swagger.json';
+import swaggerDocument from './docs/handyman-spec.json';
 import logger from './utils/logger';
 
 const app: Express = express();
@@ -18,7 +18,9 @@ passport.use('otp', OtpStrategy)
 
 if (process.env.NODE_ENV === 'development') {
     app.use('/api-docs', swaggerUi.serve);
-    app.get('/api-docs', swaggerUi.setup(swaggerDocument));
+    app.get('/api-docs', swaggerUi.setup(swaggerDocument, {
+        explorer: true,
+    }));
     app.set('view engine', 'ejs');
     app.use('/static', exampleRoutes);
 }

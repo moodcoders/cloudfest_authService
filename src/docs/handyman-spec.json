@@ -1,0 +1,139 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Auth Service is responsible for user login/sign up. This will also allow users to edit their profiles",
+        "version": "1.0.0",
+        "title": "Handyman Auth Service",
+        "contact": {
+            "email": "osamabinjunaid36@gmail.com"
+        }
+    },
+    "host": "localhost:4000",
+    "basePath": "/auth",
+    "tags": [
+        {
+            "name": "Google signin",
+            "description": "Allows user to signin/signup into the platform using google account"
+        },
+        {
+            "name": "Facebook signin",
+            "description": "Allows user to signin/signup into the platform using facebook account"
+        },
+        {
+            "name": "Mobile OTP",
+            "description": "Login with a sms based OTP"
+        }
+    ],
+    "schemes": [
+        "http"
+    ],
+    "paths": {
+        "/otp/generate-otp": {
+            "post": {
+                "tags": [
+                    "Mobile OTP"
+                ],
+                "summary": "Send a login otp",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Mobile number to which otp needs to be sent",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Mobile"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "status": "SUCCESS",
+                        "message": "OTP generated."
+                    },
+                    "405": {
+                        "description": "Invalid Input"
+                    }
+                }
+            }
+        },
+        "/otp/login": {
+            "post": {
+                "tags": [
+                    "Mobile OTP"
+                ],
+                "summary": "Login using the generated OTP",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Send Mobile number as username and OTP as password",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/OTPLoginReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "405": {
+                        "description": "Invalid Input"
+                    }
+                }
+            }
+        },
+        "/google/login": {
+            "get": {
+                "tags": [
+                    "Google signin"
+                ],
+                "summary": "Login using google account",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                ],
+                "responses": {
+
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Mobile": {
+            "type": "object",
+            "properties": {
+                "mobileNumber": {
+                    "type": "string",
+                    "default": "Mobile Number"
+                }
+            }
+        },
+        "OTPLoginReq": {
+            "type": "object",
+            "properties": {
+                "username": {
+                    "type":"string",
+                    "default": "Mobile Number"
+                },
+                "password":{
+                    "type":"string",
+                    "default": "OTP"
+                }
+            }
+        }
+    }
+}
