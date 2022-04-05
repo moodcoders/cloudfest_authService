@@ -6,10 +6,12 @@ const providerSchema: Schema = new Schema({
         enum: [
             "GOOGLE",
             "MOBILE"
-        ]
+        ],
+        required: true
     },
     uid: {
-        type: String
+        type: String,
+        required: true
     },
     data: Object
 });
@@ -56,7 +58,10 @@ const customerSchema: Schema = new Schema({
     DOB: Date,
     mobile: String,
     addresses: [addressSchema],
-    providers: [providerSchema]
+    providers: {
+        type: [providerSchema],
+        required: true
+    }
 });
 
 export default model('customer', customerSchema);

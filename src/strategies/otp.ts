@@ -13,7 +13,7 @@ var OtpStrategy = new Strategy(async function verify(mobile, otp, cb) {
         // Throw is you cant find the entry in OTPs collections
         // Either the TTL has expired or the client sent wrong details
         if (OTPdata === null) {
-            throw new HandyManError( ErrorCode.BAD_DATA,`Invalid mobile number ${mobile}` );
+            throw new HandyManError(ErrorCode.BAD_DATA, `Invalid mobile number ${mobile}`);
         } else if (OTPdata.OTPValue !== otp) {
             throw new Error("Wrong OTP.");
         }
@@ -40,7 +40,7 @@ var OtpStrategy = new Strategy(async function verify(mobile, otp, cb) {
         const newUser = new userModel({
             providers: [
                 {
-                    provider: "MOBILE",
+                    name: "MOBILE",
                     uid: mobile
                 }
             ]
@@ -48,8 +48,8 @@ var OtpStrategy = new Strategy(async function verify(mobile, otp, cb) {
 
         const savedUser = await newUser.save();
         if (savedUser !== null) {
-            const jwt = sign(savedUser.lean(), "SuperSecretKey", { algorithm: "HS256", expiresIn: "4d" });
-            return cb(null, { user: savedUser.lean(), token: jwt });
+            const jwt = sign(savedUser.toObject(), "SuperSecretKey", { algorithm: "HS256", expiresIn: "4d" });
+            return cb(null, { user: savedUser.toObject(), token: jwt });
         }
     } catch (error: any) {
         logger.error(error.stack);

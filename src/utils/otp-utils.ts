@@ -3,8 +3,6 @@ import otpModel from './../models/otp';
 import logger from './logger';
 import SMSClient from './sms-utils';
 
-connect('mongodb://localhost:27017/handyman', () => console.log('connected'));
-
 interface saveOtp {
     state: "NEW" | "OLD",
     message: String,
