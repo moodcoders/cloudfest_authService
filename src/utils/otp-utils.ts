@@ -1,4 +1,3 @@
-import { connect } from 'mongoose';
 import otpModel from './../models/otp';
 import logger from './logger';
 import SMSClient from './sms-utils';
@@ -9,7 +8,7 @@ interface saveOtp {
     otp: string
 };
 
-interface validateOtp{
+interface validateOtp {
     status: "SUCCESS" | "FAIL",
     message: string
 }
@@ -87,13 +86,13 @@ class OtpUtils extends SMSClient {
         //TODO: Add logic to prevent brute-force
         const OTPdata = await otpModel.findOne({ mobileNumber: mobileNumber });
         if (OTPdata === null) {
-        // NOTE: This situation shouldn't occur
-            logger.error( `Invalid mobile number: ${mobileNumber}`);
+            // NOTE: This situation shouldn't occur
+            logger.error(`Invalid mobile number: ${mobileNumber}`);
             return {
                 status: "FAIL",
                 message: "Invalid mobile number"
             }
-        } else if (OTPdata.OTPValue === otp ){
+        } else if (OTPdata.OTPValue === otp) {
             return {
                 status: "SUCCESS",
                 message: "OTP verified"

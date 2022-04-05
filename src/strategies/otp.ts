@@ -6,6 +6,8 @@ import logger from '../utils/logger';
 import { ErrorCode, HandyManError } from '../utils/error';
 
 var OtpStrategy = new Strategy(async function verify(mobile, otp, cb) {
+    console.log('verified')
+
     try {
         // Get the otp from OTPs collection
         const OTPdata = await otpModel.findOne({ mobileNumber: mobile });
