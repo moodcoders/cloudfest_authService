@@ -1,17 +1,32 @@
 import { Schema, model } from "mongoose";
 
+const providerSchema: Schema = new Schema({
+    name: {
+        type: String,
+        enum: [
+            "GOOGLE",
+            "MOBILE"
+        ],
+        required: true
+    },
+    uid: {
+        type: String,
+        required: true
+    },
+    data: Object
+});
+
+providerSchema.index({ name: 1, uid: 1 }, { unique: true })
+
 const experienceSchema: Schema = new Schema({
     yearsOfExperience: {
         type: Number
-    }
+    },
 })
 
 const serviceSchema: Schema = new Schema({
     name: {
         type: String,
-    },
-    uid: {
-        type: String
     },
     experience: [experienceSchema]
 })
@@ -62,10 +77,14 @@ const handymanSchema: Schema = new Schema({
     rating: Number,
     addresses: [addressSchema],
     providedServices: [serviceSchema],
+    providers: {
+        type: [providerSchema],
+        required: true
+    },
     isVerified: {
         type: Boolean,
         default: false
     },
-})
+});
 
-export default model('handyman', handymanSchema)
+export default model('handyman', handymanSchema);

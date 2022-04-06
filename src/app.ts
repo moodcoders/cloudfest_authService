@@ -6,7 +6,7 @@ import exampleRoutes from './routes/example-routes';
 import OTPRoutes from './routes/otp-routes';
 
 import googleStrategy from './strategies/google';
-import OtpStrategy from './strategies/otp';
+import { UserOtpStrategy, HandymanOtpStrategy } from './strategies/otp';
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from './docs/handyman-spec.json';
 import logger from './utils/logger';
@@ -14,7 +14,9 @@ import logger from './utils/logger';
 const app: Express = express();
 
 passport.use('google', googleStrategy);
-passport.use('otp', OtpStrategy)
+passport.use('userOtp', UserOtpStrategy)
+passport.use('handymanOtp', HandymanOtpStrategy)
+
 
 if (process.env.NODE_ENV === 'development') {
     app.use('/api-docs', swaggerUi.serve);
@@ -29,9 +31,11 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 app.use('/auth/google', googleRoutes);
-app.use('/auth/otp/', OTPRoutes);
+app.use('/auth/userOtp/', OTPRoutes);
+app.use('/auth/handymanOtp/', OTPRoutes);
 
-export default async() => {
+
+export default async () => {
     try {
         app.listen(4000, () => {
             logger.info('Application listening on http://localhost:4000')
