@@ -7,8 +7,7 @@ import logger from '../utils/logger';
 import { ErrorCode, HandyManError } from '../utils/error';
 
 const UserOtpStrategy = new Strategy(async function verify(mobile, otp, cb) {
-    console.log('user verified')
-
+    console.log('user verified');
     try {
         // Get the otp from OTPs collection
         const OTPdata = await otpModel.findOne({ mobileNumber: mobile });
@@ -61,8 +60,7 @@ const UserOtpStrategy = new Strategy(async function verify(mobile, otp, cb) {
 });
 
 const HandymanOtpStrategy = new Strategy(async function verify(mobile, otp, cb) {
-    console.log('handyman verified')
-
+    console.log('handyman verified');
     try {
         //Get the otp from OTP collection
         const OTPdata = await otpModel.findOne({ mobileNumber: mobile });

@@ -16,20 +16,20 @@ const providerSchema: Schema = new Schema({
     data: Object
 });
 
-providerSchema.index({ name: 1, uid: 1 }, { unique: true })
+providerSchema.index({ name: 1, uid: 1 }, { unique: true });
 
 const experienceSchema: Schema = new Schema({
     yearsOfExperience: {
         type: Number
-    },
-})
+    }
+});
 
 const serviceSchema: Schema = new Schema({
     name: {
         type: String,
     },
     experience: [experienceSchema]
-})
+});
 
 const addressSchema: Schema = new Schema({
     street: String,
@@ -84,7 +84,7 @@ const handymanSchema: Schema = new Schema({
     isVerified: {
         type: Boolean,
         default: false
-    },
+    }
 });
 
 export default model('handyman', handymanSchema);
