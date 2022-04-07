@@ -16,11 +16,11 @@
             "description": "Allows user to signin/signup into the platform using google account"
         },
         {
-            "name": "Facebook signin",
-            "description": "Allows user to signin/signup into the platform using facebook account"
+            "name": "User Login With OTP",
+            "description": "Login with a sms based OTP"
         },
         {
-            "name": "Mobile OTP",
+            "name": "Handyman Login With OTP",
             "description": "Login with a sms based OTP"
         }
     ],
@@ -28,10 +28,26 @@
         "http"
     ],
     "paths": {
-        "/otp/generate-otp": {
+        "/google/login": {
+            "get": {
+                "tags": [
+                    "Google signin"
+                ],
+                "summary": "Login using google account",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [],
+                "responses": {}
+            }
+        },
+        "/userOtp/generate-otp": {
             "post": {
                 "tags": [
-                    "Mobile OTP"
+                    "User Login With OTP"
                 ],
                 "summary": "Send a login otp",
                 "consumes": [
@@ -62,10 +78,10 @@
                 }
             }
         },
-        "/otp/login": {
+        "/userOtp/userlogin": {
             "post": {
                 "tags": [
-                    "Mobile OTP"
+                    "User Login With OTP"
                 ],
                 "summary": "Login using the generated OTP",
                 "consumes": [
@@ -92,12 +108,12 @@
                 }
             }
         },
-        "/google/login": {
-            "get": {
+        "/handymanOtp/generate-otp": {
+            "post": {
                 "tags": [
-                    "Google signin"
+                    "Handyman Login With OTP"
                 ],
-                "summary": "Login using google account",
+                "summary": "Send a login otp",
                 "consumes": [
                     "application/json"
                 ],
@@ -105,9 +121,54 @@
                     "application/json"
                 ],
                 "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Mobile number to which otp needs to be sent",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Mobile"
+                        }
+                    }
                 ],
                 "responses": {
-
+                    "200": {
+                        "status": "SUCCESS",
+                        "message": "OTP generated."
+                    },
+                    "405": {
+                        "description": "Invalid Input"
+                    }
+                }
+            }
+        },
+        "/handymanOtp/handymanlogin": {
+            "post": {
+                "tags": [
+                    "Handyman Login With OTP"
+                ],
+                "summary": "Login using the generated OTP",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Send Mobile number as username and OTP as password",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/OTPLoginReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "405": {
+                        "description": "Invalid Input"
+                    }
                 }
             }
         }
@@ -126,11 +187,11 @@
             "type": "object",
             "properties": {
                 "username": {
-                    "type":"string",
+                    "type": "string",
                     "default": "Mobile Number"
                 },
-                "password":{
-                    "type":"string",
+                "password": {
+                    "type": "string",
                     "default": "OTP"
                 }
             }

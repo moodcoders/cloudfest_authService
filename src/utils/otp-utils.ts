@@ -1,4 +1,3 @@
-import { connect } from 'mongoose';
 import otpModel from './../models/otp';
 import logger from './logger';
 import SMSClient from './sms-utils';
@@ -9,7 +8,7 @@ interface saveOtp {
     otp: string
 };
 
-interface validateOtp{
+interface validateOtp {
     status: "SUCCESS" | "FAIL",
     message: string
 }
@@ -44,7 +43,8 @@ class OtpUtils extends SMSClient {
             // if otp is already in database, donot generate a new one
             // instead notify user to wait till the otp invalidates
             if (otpData != undefined) {
-                const timeout = Math.floor(4 - (new Date().getTime() - otpData.createdAt.getTime()) / (1000 * 60));
+                const timeout = Math.floor(7 - (new Date().getTime() - otpData.createdAt.getTime()) / (1000 * 60));
+                console.log(timeout)
                 return {
                     message: `OTP already generated. Please wait ${timeout} minutes`,
                     otp: otpData.OTPValue,
@@ -87,13 +87,13 @@ class OtpUtils extends SMSClient {
         //TODO: Add logic to prevent brute-force
         const OTPdata = await otpModel.findOne({ mobileNumber: mobileNumber });
         if (OTPdata === null) {
-        // NOTE: This situation shouldn't occur
-            logger.error( `Invalid mobile number: ${mobileNumber}`);
+            // NOTE: This situation shouldn't occur
+            logger.error(`Invalid mobile number: ${mobileNumber}`);
             return {
                 status: "FAIL",
                 message: "Invalid mobile number"
             }
-        } else if (OTPdata.OTPValue === otp ){
+        } else if (OTPdata.OTPValue === otp) {
             return {
                 status: "SUCCESS",
                 message: "OTP verified"
@@ -101,7 +101,7 @@ class OtpUtils extends SMSClient {
         }
         return {
             status: "FAIL",
-            message: "Please recheck you otp"
+            message: "Please recheck your otp"
         }
     }
 };
