@@ -47,7 +47,8 @@ const customerSchema: Schema = new Schema({
         enum: [
             "MALE",
             "FEMALE",
-            "TRANSGENDER"
+            "TRANSGENDER",
+            "NONE"
         ]
     },
     isDisabled: {
