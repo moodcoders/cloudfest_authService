@@ -291,18 +291,15 @@
                             "type": "string",
                             "default": "GENDER"
                         },
-                        "isDisabled": {
-                            "type": "boolean",
-                            "default": false
-                        },
                         "email": {
-                            "type": "string"
+                            "type": "string",
+                            "default":"testemail@example.com"
                         },
                         "DOB": {
                             "type": "string",
                             "format": "date"
                         },
-                        "addresses": {
+                        "address": {
                             "type": "object",
                             "properties": {
                                 "street": {
