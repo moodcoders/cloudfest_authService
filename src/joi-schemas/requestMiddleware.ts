@@ -15,6 +15,9 @@ export const requestSchemaCheck = async (req: Request, res: Response, next: Next
             res.status(400).send(error.message);
             return ;
         }
+        else {
+            res.send(error);
+        }
     }
 };
 
@@ -28,6 +31,9 @@ export const requestSchemaOTP = async (req: Request, res: Response, next: NextFu
             res.status(400).send(error.message);
             return ;
         }
+        else {
+            res.send(error);
+        }
     }
 };
 
@@ -40,6 +46,9 @@ export const generateOTPSchema = async (req: Request, res: Response, next: NextF
         if (error.isJoi === true) {
             res.status(400).send(error.message);
             return ;
+        }
+        else {
+            res.send(error);
         }
     }
 };
