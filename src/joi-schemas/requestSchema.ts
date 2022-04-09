@@ -20,7 +20,7 @@ export const customerUpdateSchema = Joi.object({
         'providers.name': Joi.string().uppercase(),
         'providers.uid': Joi.string()
     })
-})
+});
 
 export const handymanUpdateSchema = Joi.object({
     update: Joi.object({
@@ -42,14 +42,14 @@ export const handymanUpdateSchema = Joi.object({
         'providers.name': Joi.string().uppercase(),
         'providers.uid': Joi.string()
     })
-})
+});
 
 export const generateOtpSchema = Joi.object({
     mobileNumber: Joi.string().regex(/^\d+$/).required().length(10)
-})
+});
 
 export const validateOtpSchema = Joi.object({
     username: Joi.string().regex(/^\d+$/).required().length(10),
     password: Joi.string().regex(/^\d+$/).required().length(6)
-})
+});
 
