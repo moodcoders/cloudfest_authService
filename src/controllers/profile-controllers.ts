@@ -1,0 +1,24 @@
+import { Request, Response } from 'express';
+
+import customer from '../models/users';
+import handyman from '../models/handyman';
+
+export const updateCustomer = async (req: Request, res: Response) => {
+    try {
+        const update = await customer.findOneAndUpdate(req.body.filter, req.body.update)
+        res.json(update)
+    } catch (error) {
+        console.error(error)
+        res.sendStatus(404)
+    }
+};
+
+export const updateHandyman = async (req: Request, res: Response) => {
+    try {
+        const update = await handyman.findOneAndUpdate(req.body.filter, req.body.update) //TODO: change the model from customer to handyman
+        res.json(update)
+    } catch (error) {
+        console.error(error)
+        res.sendStatus(401)
+    }
+};

@@ -22,6 +22,14 @@
         {
             "name": "Handyman Login With OTP",
             "description": "Login with a sms based OTP"
+        },
+        {
+            "name": "customer profile",
+            "description": "update/save customer profile details"
+        },
+        {
+            "name": "handyman profile",
+            "description": "update/save handyman profile details"
         }
     ],
     "schemes": [
@@ -171,6 +179,66 @@
                     }
                 }
             }
+        },
+        "/customer/update": {
+            "patch": {
+                "tags": [
+                    "customer profile"
+                ],
+                "summary": "update/save customer details",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "description": "Send Mobile number as username and provider as name",
+                        "schema": {
+                            "$ref": "#/definitions/customer-update"
+                        }
+                    }
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/handyman/update": {
+            "patch": {
+                "tags": [
+                    "handyman profile"
+                ],
+                "summary": "update/save customer details",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "description": "Send Mobile number as username and provider as name",
+                        "schema": {
+                            "$ref": "#/definitions/customer-update"
+                        }
+                    }
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -193,6 +261,71 @@
                 "password": {
                     "type": "string",
                     "default": "OTP"
+                }
+            }
+        },
+        "customer-update": {
+            "type": "object",
+            "properties": {
+                "filter": {
+                    "type": "object",
+                    "properties": {
+                        "providers.uid": {
+                            "type": "number",
+                            "default": "Mobile Number"
+                        },
+                        "providers.name": {
+                            "type": "string",
+                            "default": "Name"
+                        }
+                    }
+                },
+                "update": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "default": "Customer Name"
+                        },
+                        "gender": {
+                            "type": "string",
+                            "default": "GENDER"
+                        },
+                        "isDisabled": {
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "email": {
+                            "type": "string"
+                        },
+                        "DOB": {
+                            "type": "string",
+                            "format": "date"
+                        },
+                        "addresses": {
+                            "type": "object",
+                            "properties": {
+                                "street": {
+                                    "type": "string"
+                                },
+                                "houseNo": {
+                                    "type": "string"
+                                },
+                                "pincode": {
+                                    "type": "string"
+                                },
+                                "state": {
+                                    "type": "string"
+                                },
+                                "country": {
+                                    "type": "string"
+                                },
+                                "tag": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

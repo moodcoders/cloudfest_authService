@@ -1,10 +1,11 @@
 import express, { Express } from 'express';
 import passport from 'passport';
 import morgan from 'morgan';
+
 import googleRoutes from './routes/google-routes';
 import exampleRoutes from './routes/example-routes';
 import OTPRoutes from './routes/otp-routes';
-
+import { customerRouter, handymanRouter } from './routes/profile-routes';
 import googleStrategy from './strategies/google';
 import { UserOtpStrategy, HandymanOtpStrategy } from './strategies/otp';
 import swaggerUi from 'swagger-ui-express';
@@ -30,10 +31,11 @@ if (process.env.NODE_ENV === 'development') {
 app.use(express.json());
 app.use(morgan('dev'));
 
-app.use('/auth/google', googleRoutes);
+app.use('/auth/customer', customerRouter);
+app.use('/auth/google',  googleRoutes);
 app.use('/auth/userOtp/', OTPRoutes);
+app.use('/auth/handyman', handymanRouter);
 app.use('/auth/handymanOtp/', OTPRoutes);
-
 
 export default async () => {
     try {
@@ -44,4 +46,4 @@ export default async () => {
         logger.error('An error occured while starting the server');
         throw new Error('An error occured while starting the server');
     }
-}
+};
