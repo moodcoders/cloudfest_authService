@@ -239,9 +239,56 @@
                     }
                 }
             }
+        },
+        "/handyman/verify":{
+            "patch": {
+                "tags": [
+                    "handyman profile"
+                ],
+                "summary": "update/save customer details",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "description": "Send _id as id and true/false to change verified status",
+                        "schema": {
+                            "$ref": "#/definitions/verify"
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "id",
+                        "description": "_id of handyman",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "verify": {
+            "type": "object",
+            "properties": {  
+                "isVerified": {
+                    "type": "boolean",
+                    "default": false
+                }
+            }
+        },
         "Mobile": {
             "type": "object",
             "properties": {
