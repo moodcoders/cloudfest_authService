@@ -11,12 +11,13 @@ import { UserOtpStrategy, HandymanOtpStrategy } from './strategies/otp';
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from './docs/handyman-spec.json';
 import logger from './utils/logger';
+import { requestSchemaCheck } from './joi-schemas/requestMiddleware';
 
 const app: Express = express();
 
 passport.use('google', googleStrategy);
-passport.use('userOtp', UserOtpStrategy)
-passport.use('handymanOtp', HandymanOtpStrategy)
+passport.use('userOtp', UserOtpStrategy);
+passport.use('handymanOtp', HandymanOtpStrategy);
 
 
 if (process.env.NODE_ENV === 'development') {
@@ -31,16 +32,16 @@ if (process.env.NODE_ENV === 'development') {
 app.use(express.json());
 app.use(morgan('dev'));
 
-app.use('/auth/customer', customerRouter);
+app.use('/auth/customer', requestSchemaCheck, customerRouter);
 app.use('/auth/google',  googleRoutes);
 app.use('/auth/userOtp/', OTPRoutes);
-app.use('/auth/handyman', handymanRouter);
+app.use('/auth/handyman', requestSchemaCheck, handymanRouter);
 app.use('/auth/handymanOtp/', OTPRoutes);
 
 export default async () => {
     try {
         app.listen(4000, () => {
-            logger.info('Application listening on http://localhost:4000')
+            logger.info('Application listening on http://localhost:4000');
         });
     } catch (error) {
         logger.error('An error occured while starting the server');
