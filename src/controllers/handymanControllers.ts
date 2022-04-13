@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import handyman from '../models/handyman';
+import logger from '../utils/logger';
 
 
 export const verifyHandyman = async (req: Request, res: Response) => {
@@ -9,6 +10,9 @@ export const verifyHandyman = async (req: Request, res: Response) => {
             message: `handyman verified status changed to ${req.body.isVerified}`
         });
     } catch (error: any) {
-        res.sendStatus(400);
+        logger.error(error);
+        res.send({
+            message: error.message
+        }).sendStatus(400);
     }
 };

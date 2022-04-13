@@ -12,7 +12,7 @@ OTPRouter.post('/generate-otp',generateOTPSchema, generateOTPController);
 
 OTPRouter.post('/userlogin',requestSchemaOTP, passport.authenticate('userOtp', { session: false, failWithError: true }),
     async (req: Request, res: Response, next: NextFunction) => {
-        return res.json({ user: req.body.user })
+        return res.json({ user: req.user })
     },
     async (error: any, req: Request, res: Response, next: NextFunction) => {
         logger.error(error.message);
@@ -20,7 +20,9 @@ OTPRouter.post('/userlogin',requestSchemaOTP, passport.authenticate('userOtp', {
             res.status(400).json({ message: error.message });
             return;
         } else if (error.isJoi === true) {
-            res.status(400).send(error.message)
+            res.status(400).send({
+                message: error.message
+            })
             return;
         };
         res.status(500).json({
