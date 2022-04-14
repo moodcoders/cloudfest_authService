@@ -11,8 +11,8 @@ export const verifyHandyman = async (req: Request, res: Response) => {
         });
     } catch (error: any) {
         logger.error(error);
-        res.send({
+        res.status(400).send({
             message: error.message
-        }).sendStatus(400);
+        })
     }
 };
