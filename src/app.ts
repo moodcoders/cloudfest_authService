@@ -35,7 +35,7 @@ app.use(morgan('dev'));
 app.use('/auth/customer', requestSchemaCheck, customerRouter);
 app.use('/auth/google',  googleRoutes);
 app.use('/auth/userOtp/', OTPRoutes);
-app.use('/auth/handyman', requestSchemaCheck, handymanRouter);
+app.use('/auth/handyman', handymanRouter);
 app.use('/auth/handymanOtp/', OTPRoutes);
 
 export default async () => {
