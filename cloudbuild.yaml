@@ -1,6 +1,6 @@
 steps:
 - id: docker build
   name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/$PROJECT_ID/APPSERVICE', '.']
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/my-app', '.']
 images:
-- gcr.io/$PROJECT_ID/APPSERVICE
+- gcr.io/$PROJECT_ID/my-app
