@@ -1,18 +1,17 @@
 steps:
 - id: docker build
   name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/$PROJECT_ID/APPSERVICE/$SHORT_SHA', '.']
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/auth-service:$SHORT_SHA', '.']
 - id: docker push
   name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/$PROJECT_ID/APPSERVICE/$SHORT_SHA']
-# - id: Deploy to GKE
-#   name: 'gcr.io/cloud-builders/gke-deploy:stable'
-#   args:
-#   - run
-#   - --filename=PATH-TO-KUBERNETES-CONFIG
-#   - --image=gcr.io/$PROJECT_ID/APPSERVICE:$SHORT_SHA
-#   - --cluster=CLUSTER-NAME
-#   - --location=CLUSTER-LOCATION # region or zone
+  args: ['push', 'gcr.io/$PROJECT_ID/auth-service:$SHORT_SHA']
+- id: Deploy to GKE
+  name: 'gcr.io/cloud-builders/gke-deploy:stable'
+  args:
+  - run
+  - --image=gcr.io/$PROJECT_ID/auth-service:$SHORT_SHA
+  - --cluster=cost-optimized-cluster-1
+  - --location=asia-east1-a # region or zone
 
 images:
-- gcr.io/$PROJECT_ID/APPSERVICE/$SHORT_SHA
+- gcr.io/$PROJECT_ID/auth-service:$SHORT_SHA
