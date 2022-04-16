@@ -1,17 +1,24 @@
+import { sign } from 'jsonwebtoken';
 import passport from 'passport';
 import { Profile, Strategy, VerifyCallback } from 'passport-google-oauth20';
-import UserModel from '../models/users';
+import userModel from '../models/users';
 
 const verify = async (accessToken:string, refreshToken: string, profile: Profile, cb: VerifyCallback): Promise<void> => {
 
     try {
-        const user = await UserModel.findOne({
-            'providers.name': profile.provider.toUpperCase(),
-            'providers.uid': profile.id
-        });
+        const foundUser = await userModel.findOne({
+            providers: {
+                '$elemMatch': {
+                    provider: "MOBILE",
+                    uid: profile.id
+                }
+            }
+        }, {
+            providers: 0
+        }).lean();
 
-        if (user === null) {
-            const newUser = new UserModel({
+        if (foundUser === null) {
+            const newUser = new userModel({
                 name: profile.displayName,
                 email: profile.emails ? profile.emails[0].value : '',
                 providers: [{
@@ -20,11 +27,12 @@ const verify = async (accessToken:string, refreshToken: string, profile: Profile
                 }]
             })
             const savedUser = await newUser.save();
-            cb(null, savedUser);
+            const jwt = sign(savedUser.toObject(), "SuperSecretKey", { algorithm: "HS256", expiresIn: "4d" });
+            return cb(null, { user: savedUser.toObject(), token: jwt });
         } else {
             //the user already exists in db
-            cb(null, user);
-        }
+            const jwt = sign(foundUser, "SuperSecretKey", { algorithm: "HS256", expiresIn: "4d" });
+            return cb(null, { user: foundUser, token: jwt });        }
     } catch (error: any) {
         console.log(error)
         cb(error)
