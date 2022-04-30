@@ -5,13 +5,6 @@ steps:
 - id: docker push
   name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/$PROJECT_ID/auth-service:$SHORT_SHA']
-- id: Deploy to GKE
-  name: 'gcr.io/cloud-builders/gke-deploy:stable'
-  args:
-  - run
-  - --image=gcr.io/$PROJECT_ID/auth-service:$SHORT_SHA
-  - --cluster=cost-optimized-cluster-1
-  - --location=asia-east1-a # region or zone
 
 images:
 - gcr.io/$PROJECT_ID/auth-service:$SHORT_SHA
