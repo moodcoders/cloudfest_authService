@@ -76,7 +76,7 @@ class OtpUtils extends SMSClient {
     public async generateAndSendOtp(mobileNumber: string) {
         const OTPdata = await this.generateAndSaveOtp(mobileNumber);
         if (OTPdata.state === "NEW") {
-            // this.deliverOTP(mobileNumber, OTPdata.otp);
+            this.deliverOTP(mobileNumber, OTPdata.otp);
             console.log(OTPdata);
             return OTPdata.message;
         }
