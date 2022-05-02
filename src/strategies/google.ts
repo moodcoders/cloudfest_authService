@@ -43,7 +43,7 @@ const googleStrategy: Strategy = new Strategy(
     {
         clientID: '363336576338-cdn32827l9fthvubbhpenn98eb649lsd.apps.googleusercontent.com',
         clientSecret: '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',
-        callbackURL: 'http://192.168.1.12.xip.io:4000/auth/google/callback'
+        callbackURL: 'https://auth-service-ffptpmrzya-el.a.run.app/auth/google/callback'
     },
     verify
 );
